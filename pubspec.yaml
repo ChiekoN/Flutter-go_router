@@ -44,6 +44,7 @@ dependencies:
   provider: ^6.1.2
   device_info_plus: ^11.3.3
   google_fonts: ^6.2.1
+  desktop_window: ^0.4.2
 
   
 dev_dependencies:
