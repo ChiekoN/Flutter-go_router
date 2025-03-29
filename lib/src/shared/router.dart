@@ -1,10 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
+import '../pages/toplist/toplist.dart';
+import '../pages/add/add.dart';
+import '../pages/detail/detail.dart';
+import '../pages/history/history.dart';
+
+
 class AppRoutes {
   static const home = '/';
   static const add = 'add';
-  static const details = 'details';
+  static const detail = 'detail';
   static const history = '/history';
 }
 
@@ -39,7 +45,7 @@ final appRouter = GoRouter(
       path: AppRoutes.home,
       pageBuilder: (context, state) => NoTransitionPage(
         child: ScaffoldWithBottomNavBar(
-          currentIndex: 0, // Should match with destinations[N].index for '/'
+          currentIndex: 0,
           child: TopListPage(),
         ),
       ),
@@ -51,7 +57,7 @@ final appRouter = GoRouter(
           ),
         ),
         GoRoute(
-          path: '${AppRoutes.details}/:index',
+          path: '${AppRoutes.detail}/:index',
           pageBuilder: (context, state) => NoTransitionPage(
             child: DateDetailPage(
               id: state.pathParameters['index']
@@ -118,6 +124,8 @@ class ScaffoldWithBottomNavBar extends StatelessWidget {
 //
 // TODO: Go to pages later
 // 
+
+/*
 class TopListPage extends StatefulWidget {
   const TopListPage({super.key});
 
@@ -142,7 +150,9 @@ class _TopListPageState extends State<TopListPage> {
     );
   }
 }
+*/
 
+/*
 class HistoryListPage extends StatefulWidget {
   const HistoryListPage({super.key});
 
@@ -169,8 +179,8 @@ class _HistoryListPageState extends State<HistoryListPage> {
     );
   }
 }
-
-
+*/
+/*
 class DateDetailPage extends StatelessWidget {
   final String? id;
   const DateDetailPage({this.id, super.key,});
@@ -198,8 +208,8 @@ class DateDetailPage extends StatelessWidget {
     );
   }
 }
-
-
+*/
+/*
 class NewDatePage extends StatefulWidget {
   const NewDatePage({super.key});
 
@@ -232,3 +242,4 @@ class _NewDatePageState extends State<NewDatePage> {
     );
   }
 }
+*/
