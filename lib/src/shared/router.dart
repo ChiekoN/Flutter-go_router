@@ -3,54 +3,40 @@ import 'package:go_router/go_router.dart';
 
 class AppRoutes {
   static const home = '/';
-  static const details = '/details/:index';
-  static const add = '/add';
+  static const add = 'add';
+  static const details = 'details';
   static const history = '/history';
 }
 
-const List<NavigationDestination> destinations = [
-  NavigationDestination(
-    route: '/',
+const List<NavigationDestinationRoute> destinations = [
+  NavigationDestinationRoute(
+    route: AppRoutes.home,
     label: 'Home',
     icon: Icon(Icons.home),
-    index: 0, // BottomNavigationBar index 0
   ),
-  NavigationDestination(
-    route: '/add',
-    label: 'Add',
-    icon: Icon(Icons.add),
-  ),
-  NavigationDestination(
-    route: '/details',
-    label: 'Details',
-  ),
-  NavigationDestination(
-    route: '/history',
+  NavigationDestinationRoute(
+    route: AppRoutes.history,
     label: 'History',
     icon: Icon(Icons.history),
-    index: 1, // BottomNavigationBar index 1
   ),
 ];
 
-class NavigationDestination {
-  const NavigationDestination({
+class NavigationDestinationRoute {
+  const NavigationDestinationRoute({
     required this.route,
     required this.label,
-    this.icon,
-    this.index, // index for BottomNavigationBar. 
-                // Must be set only if this page is reached from BottomNavigationBar.
+    required this.icon,
   });
 
   final String route;
   final String label;
-  final Icon? icon;
-  final int? index;
+  final Icon icon;
 }
 
 final appRouter = GoRouter(
   routes: [
     GoRoute(
-      path: '/',
+      path: AppRoutes.home,
       pageBuilder: (context, state) => NoTransitionPage(
         child: ScaffoldWithBottomNavBar(
           currentIndex: 0, // Should match with destinations[N].index for '/'
@@ -59,23 +45,23 @@ final appRouter = GoRouter(
       ),
       routes: [
         GoRoute(
-          path: 'details/:index',
+          path: AppRoutes.add,
+          pageBuilder: (context, state) => NoTransitionPage(
+            child: NewDatePage(),
+          ),
+        ),
+        GoRoute(
+          path: '${AppRoutes.details}/:index',
           pageBuilder: (context, state) => NoTransitionPage(
             child: DateDetailPage(
               id: state.pathParameters['index']
             ),
           ),
         ),
-        GoRoute(
-          path: 'add',
-          pageBuilder: (context, state) => NoTransitionPage(
-            child: NewDatePage(),
-          ),
-        ),
       ],
     ),
     GoRoute(
-      path: '/history',
+      path: AppRoutes.history,
       pageBuilder: (context, state) => NoTransitionPage(
         child: ScaffoldWithBottomNavBar(
           currentIndex: 1, // Should match with destinations[N].index for '/history'
@@ -100,10 +86,12 @@ class ScaffoldWithBottomNavBar extends StatelessWidget {
     required this.child
   }) : super(key: key);
 
+  
+
   @override
   Widget build(BuildContext context) {
     
-    // Constract List<BottomNavigationBarItem> by extracting necessary items from `destinations`
+    /*
     List<NavigationDestination> inNavigation = destinations.where(
       (dest) => dest.index != null
     ).toList();
@@ -116,24 +104,25 @@ class ScaffoldWithBottomNavBar extends StatelessWidget {
         );
       }
     ).toList();
-
+    */
     return Scaffold(
       body: child,
-      bottomNavigationBar: BottomNavigationBar(
-        currentIndex: currentIndex,
-        type: BottomNavigationBarType.fixed,
-        onTap: (index) {
+      bottomNavigationBar: NavigationBar(
+        selectedIndex: currentIndex,
+        destinations: destinations.map(
+          (dest) => NavigationDestination(
+            icon: dest.icon, 
+            label: dest.label
+          )
+        ).toList(),
+        onDestinationSelected: (int index) {
           // match the tapped index with destination route
-          NavigationDestination destination = destinations.firstWhere(
-            (dest) => dest.index == index,
-          ); 
-          context.go(destination.route);
+          context.go(destinations[index].route);
         },
-        items: navigationItems, // Items extracted from `destinations`
       ),
       floatingActionButton: currentIndex == 0 ? FloatingActionButton(
         onPressed: () {
-          context.go(AppRoutes.add);
+          context.go('/${AppRoutes.add}');
         },
         child: const Icon(Icons.add),
       ) : null,
