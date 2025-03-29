@@ -91,20 +91,6 @@ class ScaffoldWithBottomNavBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     
-    /*
-    List<NavigationDestination> inNavigation = destinations.where(
-      (dest) => dest.index != null
-    ).toList();
-    inNavigation.sort((a, b) => a.index!.compareTo(b.index!));
-    List<BottomNavigationBarItem> navigationItems = inNavigation.map(
-      (navItem) {
-        return BottomNavigationBarItem(
-          icon: navItem.icon!,
-          label: navItem.label,
-        );
-      }
-    ).toList();
-    */
     return Scaffold(
       body: child,
       bottomNavigationBar: NavigationBar(
@@ -116,7 +102,6 @@ class ScaffoldWithBottomNavBar extends StatelessWidget {
           )
         ).toList(),
         onDestinationSelected: (int index) {
-          // match the tapped index with destination route
           context.go(destinations[index].route);
         },
       ),
