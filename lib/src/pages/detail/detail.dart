@@ -4,8 +4,8 @@ import 'package:go_router/go_router.dart';
 import '../../shared/router.dart';
 
 class DateDetailPage extends StatelessWidget {
-  final String? id;
-  const DateDetailPage({this.id, super.key,});
+  final String? index;
+  const DateDetailPage({this.index, super.key,});
 
   @override
   Widget build(BuildContext context) {
@@ -15,7 +15,7 @@ class DateDetailPage extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             Text(
-              'This is a detail page for $id',
+              'This is a detail page for $index.',
               style: Theme.of(context).textTheme.headlineMedium,
             ),
           ],
