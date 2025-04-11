@@ -1,4 +1,4 @@
-# page_routing_app
+# Flutter: routing demo app using NavigationBar and go_router
 
 This is a little Flutter project that demonstrates a simple routing control using `go_router` package.
 
